@@ -123,8 +123,11 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
                      right_lat <= city.lat <= left_lat]
     cities_in_lon = [city for city in cities if
                      right_lon <= city.lon <= left_lon]
+
     # Get the intersection
-    within += list(set(cities_in_lat) & set(cities_in_lon))
+    # Note: Using set intersection would have been cleaner, but the test object
+    # is not sorted, so using an unordered collection wouldn't pass the test
+    within += [city for city in cities_in_lat if city in cities_in_lon]
     return within
 
 
