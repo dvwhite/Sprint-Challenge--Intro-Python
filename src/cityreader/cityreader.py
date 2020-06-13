@@ -33,12 +33,29 @@ class City:
 # should not be loaded into a City object.
 cities = []
 
-def cityreader(cities=[]):
-  # TODO Implement the functionality to read from the 'cities.csv' file
-  # For each city record, create a new City instance and add it to the 
-  # `cities` list
-    
+
+def cityreader(cities: list = []) -> list:
+    # TODO Implement the functionality to read from the 'cities.csv' file
+    # For each city record, create a new City instance and add it to the
+    # `cities` list
+    fh = 'cities.csv'
+
+    # Define the index of each row array in the csvreader object
+    NAME_IDX = 0
+    LAT_IDX = 3
+    LON_IDX = 4
+
+    # Open and read the csv file
+    with open(fh, newline='') as csvfile:
+        # Create the csvreader object to iterate over each line
+        citiesreader = csv.reader(csvfile, delimiter=',')
+        # Skip the header row, row 1 and build the city class objects
+        # from the csv data and append to cities
+        cities += [City(city[NAME_IDX], city[LAT_IDX], city[LON_IDX])
+                   for city in list(citiesreader)[1:]]
+    csvfile.close()  # close the file handle
     return cities
+
 
 cityreader(cities)
 
@@ -49,10 +66,10 @@ for c in cities:
 # STRETCH GOAL!
 #
 # Allow the user to input two points, each specified by latitude and longitude.
-# These points form the corners of a lat/lon square. Pass these latitude and 
+# These points form the corners of a lat/lon square. Pass these latitude and
 # longitude values as parameters to the `cityreader_stretch` function, along
 # with the `cities` list that holds all the City instances from the `cityreader`
-# function. This function should output all the cities that fall within the 
+# function. This function should output all the cities that fall within the
 # coordinate square.
 #
 # Be aware that the user could specify either a lower-left/upper-right pair of
@@ -77,12 +94,13 @@ for c in cities:
 
 # TODO Get latitude and longitude values from the user
 
+
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
-  # within will hold the cities that fall within the specified region
-  within = []
+    # within will hold the cities that fall within the specified region
+    within = []
 
-  # TODO Ensure that the lat and lon valuse are all floats
-  # Go through each city and check to see if it falls within 
-  # the specified coordinates.
+    # TODO Ensure that the lat and lon valuse are all floats
+    # Go through each city and check to see if it falls within
+    # the specified coordinates.
 
-  return within
+    return within
