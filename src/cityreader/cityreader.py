@@ -5,10 +5,18 @@ import csv
 
 
 class City:
-    def __init__(self, name, lat, lon):
+    """The City class object containing a name, latitude and longitude"""
+
+    def __init__(self, name: str, lat: float, lon: float):
         self.name = name
-        self.lat = lat
-        self.lon = lon
+        self.lat = float(lat)
+        self.lon = float(lon)
+
+    def __str__(self):
+        return f'City: {self.name}, {self.lat}, {self.lon}'
+
+    def __repr__(self):
+        return f'City({self.name}, {self.lat}, {self.lon})'
 
 
 # We have a collection of US cities with population over 750,000 stored in the
