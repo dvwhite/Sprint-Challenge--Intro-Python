@@ -93,14 +93,41 @@ for c in cities:
 # Salt Lake City: (40.7774,-111.9301)
 
 # TODO Get latitude and longitude values from the user
+ip1 = input('Enter lat1,lon1: ')
+ip2 = input('Enter lat2,lon2: ')
+lat1, lon1 = ip1.split(',')
+lat2, lon2 = ip2.split(',')
 
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
     # within will hold the cities that fall within the specified region
     within = []
 
-    # TODO Ensure that the lat and lon valuse are all floats
+    # Normalize input data
+    lat1, lat2, lon1, lon2 = (float(lat1), float(lat2),
+                              float(lon1), float(lon2))
+    if lon1 < lon2:
+        left_lon = lon2
+        left_lat = lat2
+        right_lon = lon1
+        right_lat = lat1
+    else:
+        left_lon = lon1
+        left_lat = lat1
+        right_lon = lon2
+        right_lat = lat2
+
     # Go through each city and check to see if it falls within
     # the specified coordinates.
-
+    cities_in_lat = [city for city in cities if
+                     right_lat <= city.lat <= left_lat]
+    cities_in_lon = [city for city in cities if
+                     right_lon <= city.lon <= left_lon]
+    # Get the intersection
+    within += list(set(cities_in_lat) & set(cities_in_lon))
     return within
+
+
+# Manually test the cityreader_stretch function
+cities_within = cityreader_stretch(lat1, lon1, lat2, lon2, cities)
+print('\n'.join([str(city) for city in cities_within]))
